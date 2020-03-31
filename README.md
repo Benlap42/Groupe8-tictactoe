@@ -3,5 +3,8 @@
 ## Description
 
 ## Auteurs
-
+Yoann
+Ines
+Abdou
+Benoît
 ## Installation
