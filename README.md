@@ -1,3 +1,3 @@
 # Groupe8-tictactoe
 
-# Installation
+## Installation
