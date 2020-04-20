@@ -69,6 +69,51 @@ public class Arbitre {
         return vainqueur;
 
     }
+
+    public Joueur startGame( boolean _trace ) {
+        Coup coup;
+
+        plateau.init();		     // Prépare le plateau pour le jeu.
+        
+        
+        while (!plateau.partieTerminee()) {
+            do {
+                if ( _trace ) {
+                    System.out.println(plateau);
+                    System.out.println(currentJoueur + " ( " +currentJoueur.getIdJoueur() + "  )  joue : " );
+                }
+                coup = currentJoueur.joue(plateau);
+
+                if (!plateau.isValide(coup)) {
+                    if ( _trace )
+                        System.err.println("Coup non valide ! : " + currentJoueur);
+                    else {  // en mode batch le joueur perd la partie
+                        System.err.println("Coup non valide ! : " + currentJoueur);
+                        if (currentJoueur == joueur1) return joueur2; else return joueur1;
+                    }
+                }
+
+            } while (!plateau.isValide(coup));
+
+            plateau.joueCoup(coup);
+            
+            
+            if (currentJoueur == joueur1) {
+                currentJoueur = joueur2;
+            } else {
+                currentJoueur = joueur1;
+            }
+        }
+        
+        Joueur vainqueur = plateau.vainqueur();
+        if ( vainqueur != null )
+            System.out.println( vainqueur + " gagne la partie ");
+        else
+            System.out.println( "Partie nulle ");
+        
+        return vainqueur;
+
+    }
     
     public void startTournament( int _nbPartie , boolean _trace) {
         double[] nbVictoire = new double[2]; 
