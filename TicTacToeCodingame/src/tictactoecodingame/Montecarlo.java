@@ -12,9 +12,9 @@ import java.util.Random;
  *
  * @author benoi
  */
-public class Montecarlo {
+public class Montecarlo extends AlgoRecherche  {
     
-    public AlgoMCTS() {
+    public Montecarlo() {
     }
     
     
