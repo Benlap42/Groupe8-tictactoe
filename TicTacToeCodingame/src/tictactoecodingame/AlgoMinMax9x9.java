@@ -182,6 +182,16 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
     }
     
     private int determinationScore2(){
+        /*
+        Version avec interactions entre grilles 3x3
         
+        Attribue un score à chaque grille 3x3, déterminé par les scores de chaque case de ces grilles 3x3 (algo determinationScore)
+        
+        Ce score est répercuté sur les coups où l'IA peut jouer.
+        + évite de jouer de sorte à faire remplir une grille 3x3 à l'adversaire
+        + force l'adversaire à jouer de manière à permettre à l'IA de remplir une grille
+        + règles du 3x3 appliquées à la grande grille pour gagner
+        
+        */
     }
 }
