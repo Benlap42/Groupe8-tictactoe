@@ -5,6 +5,9 @@
  */
 package tictactoecodingame;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *
  * @author benoi
