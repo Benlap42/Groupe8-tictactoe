@@ -1,21 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tictactoecodingame;
 
 import java.util.ArrayList;
 
 /**
  *
- * @author user
+ * @author Yoann Bordin
  */
 public class AlgoMinMax9x9 extends AlgoRecherche{
     int profondeur;     // profondeur de recherche dans l'arbre des coups possibles
     ArbreCoups ac;
     
-    Joueur adversaire;
     Joueur joueur;
     Plateau pl;
     
@@ -23,14 +18,13 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
     int[][] diag_dg = {{2, 0}, {1, 1}, {0, 2}};
     
 
-    public AlgoMinMax9x9(Plateau pl, Joueur j1, Joueur j2, int profondeur){
+    public AlgoMinMax9x9(Plateau pl, Joueur j, int profondeur){
         
         this.profondeur = profondeur;
         Coup node = pl.getDernierCoup();
-        ac = new ArbreCoups(pl,j1,j2, (CoupTicTacToe) node,profondeur);
+        ac = new ArbreCoups(pl,j,j.getAdversaire(), (CoupTicTacToe) node,profondeur);
         
-        adversaire = j2;
-        joueur = j1;
+        joueur = j;
         this.pl = pl;
     }
     
@@ -68,7 +62,7 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
      private int minMax(CoupTicTacToe node, int profondeur, boolean max){
         // If end of the tree then return score from parameters
         if(profondeur == 0 || ac.hauteur() == 0){
-            return determinationScore(node, joueur, pl);
+            return determinationScore9x9(node, joueur, pl);
         }
         // Recursive use of the minmax algorithm to set the scores of next plays
         ArrayList<Coup> listeCoupsSuiv = ac.getListeCoups(node);
@@ -112,8 +106,10 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
     
    
 
-    private int determinationScore(CoupTicTacToe c, Joueur joueur, Plateau plateau) {
+    private int determinationScoreCases3x3(CoupTicTacToe c, Joueur joueur, Plateau plateau) {
         /*
+        
+        Version de base utilisée pour les grilles 3x3
         
          pour chaque rangée :
          si rangée contient 2 pièces
@@ -158,9 +154,9 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         } else if (rangee(rangee, joueur, pl) == 1) {
             score += 1;
         }
-        if (rangee(rangee, adversaire, pl) == 2) {
+        if (rangee(rangee, joueur.getAdversaire(), pl) == 2) {
             score += 3;
-        } else if (rangee(rangee, adversaire, pl) == 1) {
+        } else if (rangee(rangee, joueur.getAdversaire(), pl) == 1) {
             score -= 1;
         }
 
@@ -181,7 +177,7 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         return ct;
     }
     
-    private int determinationScore2(){
+    private int determinationScore9x9(CoupTicTacToe cp, Joueur joueur, Plateau _plateau){
         /*
         Version avec interactions entre grilles 3x3
         
@@ -193,5 +189,84 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         + règles du 3x3 appliquées à la grande grille pour gagner
         
         */
+        GrilleTicTacToe9x9 plateau = (GrilleTicTacToe9x9) _plateau;
+        
+        // Découpage en grilles 3x3
+        GrilleTicTacToe3x3[][] grille3x3 = decoupageGrille3x3(plateau);
+        
+        // Détermination du score de chaque grille 3x3
+        int[][] score3x3 = determinationScoreGrille3x3(plateau, grille3x3);
+        
+        // Calcul du score des coups possibles
+        int ligne3x3 = cp.getLigne()%3;
+        int colonne3x3 = cp.getColonne()%3;
+        System.out.println(cp.getColonne() + " " + cp.getLigne());
+        
+        int score;
+        score = score3x3[ligne3x3][colonne3x3];
+        
+        // Ajout des scores de la grille 3x3
+        score += determinationScoreCases3x3(cp, joueur, plateau);
+        
+        System.out.println("Score : " + score);
+        
+        return score; 
+    }
+
+    private GrilleTicTacToe3x3[][] decoupageGrille3x3(GrilleTicTacToe9x9 plateau) {
+        GrilleTicTacToe3x3[][] grille3x3 = new GrilleTicTacToe3x3[3][3];
+        for(int i = 0; i<3; i++){
+            for(int j = 0; j<3; j++){
+                
+                GrilleTicTacToe3x3 g = new GrilleTicTacToe3x3();
+                
+                // Remplit les grilles 3x3 avec les jetons du plateau
+                Jeton jList[][] = new Jeton[3][3];
+                for(int l = 0; l<3; l++){
+                    for(int c = 0; c < 3; c++){
+                        jList[l][c] = (Jeton) plateau.getPiece(new Case(3*i+l,3*j+c));
+                    }
+                }
+                g.grille = jList;
+                // Remplit le tableau contenant les grilles 3x3
+                grille3x3[i][j] = g;
+            }
+        }
+        return grille3x3;
+    }
+
+    private int[][] determinationScoreGrille3x3(GrilleTicTacToe9x9 plateau, GrilleTicTacToe3x3[][] grille3x3) {
+        int[][] score3x3 = new int[3][3];
+        
+        for(int i = 0; i<3; i++){
+            for(int j = 0; j<3; j++){
+                
+                // Détermination du score de chaque case (pour l'adversaire)
+                GrilleTicTacToe3x3 g3x3 = grille3x3[i][j];
+                ArrayList<Coup> lCoups3x3;
+                
+                lCoups3x3 = g3x3.getListeCoups(joueur.getAdversaire());
+                System.out.println(lCoups3x3);
+                
+                for(Coup _c : lCoups3x3){
+                    CoupTicTacToe c = (CoupTicTacToe) _c;
+                    c.setNote(determinationScoreCases3x3(c, joueur.getAdversaire(), plateau));
+                }
+                
+                // Calcul du score de la grille 3x3 pour l'adversaire et en prend le max
+                int sc3x3Prov = lCoups3x3.get(0).getNote();
+                for(Coup c : lCoups3x3){
+                    int note = c.getNote();
+                    
+                    if(note > sc3x3Prov){
+                        sc3x3Prov = note;
+                    }
+                }
+                
+                //Ajoute l'inverse du score à la liste des scores des grilles 3x3 (score les plus faibles moins intéressants pour l'IA)
+                score3x3[i][j] = -sc3x3Prov;
+            }
+        }
+        return score3x3;
     }
 }
