@@ -30,6 +30,14 @@ public abstract class Joueur {
 	}
 	abstract public Coup joue( Plateau p_plateau );
 	
+	public void setAdversaire(Joueur adv){
+            adversaire = adv;
+        }
+        
+        public Joueur getAdversaire(){
+            return adversaire;
+        }
+	
 	public String toString() {
 		return nom;
 	}
