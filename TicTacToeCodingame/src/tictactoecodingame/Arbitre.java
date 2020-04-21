@@ -16,7 +16,10 @@ public class Arbitre {
         plateau = _plateau;
         joueur1 = _joueur1;
         joueur2 = _joueur2;
-        currentJoueur = joueur1;     // Le joueur1 commence la partie.        
+        currentJoueur = joueur1;     // Le joueur1 commence la partie.    
+        
+        joueur1.setAdversaire(joueur2);
+        joueur2.setAdversaire(joueur1);
     }
 
     /**
