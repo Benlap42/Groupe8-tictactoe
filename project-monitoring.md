@@ -83,7 +83,7 @@ Faire le lien avec GitKraken
 Création des branches du projet
 Appropriation du fonctionnement
 
-URL sur Github : " 
+URL sur Github : " https://github.com/Benlap42/Groupe8-tictactoe "
 
 ## Manipulation des données du programme 
 
