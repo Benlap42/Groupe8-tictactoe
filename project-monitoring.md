@@ -104,6 +104,18 @@ Faire la traduction entre la théorie des algorithme et le code java
 -Séances : 1, 2 et 3
 
 
+## Création de la classe ArbreCoups
+
+Element de l'arborescence utilisé pour l'algorithme MinMax. La classe sert à modéliser un arbre de coups possibles.
+
+-Responsables: Yoann et Abdourahmane
+-Séance: 3
+
+## Création et amélioration de la classe AlgoMinMax9x9
+Classe héritée de la classe AlgoRecherche. Elle contient les méthodes nécessaires pour évaluer et attribuer des notes aux coups, ainsi que choisir le meilleur coup.
+-Responsables: Yoann et Abdourahmane
+-Séances: 3 et 4
+
 ## Création de le class Noeud 
 
 Elément de l'arbolescance utilisé pour l'algorithme Monté Carlo
