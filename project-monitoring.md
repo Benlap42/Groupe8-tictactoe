@@ -108,15 +108,23 @@ Faire la traduction entre la théorie des algorithme et le code java
 
 Element de l'arborescence utilisé pour l'algorithme MinMax. La classe sert à modéliser un arbre de coups possibles.
 
--Responsables: Yoann et Abdourahmane
--Séance: 3
+- Responsables : Yoann et Abdourahmane
+- Séance : 3
+- Commit : 480fa0f0345e4b13641561bb87c9d9c54c2d772e
+
+Création de toutes les fonctions nécessaires à la gestion d'arbres : constructeurs, getters, setters, hauteur...
+Fonctions non réalisées : stockage et récupération des données à partir d'un fichier .txt
 
 ## Création et amélioration de la classe AlgoMinMax9x9
-Classe héritée de la classe AlgoRecherche. Elle contient les méthodes nécessaires pour évaluer et attribuer des notes aux coups, ainsi que choisir le meilleur coup.
--Responsables: Yoann et Abdourahmane
--Séances: 3 et 4
+Classe héritée de la classe AlgoRecherche.
+Elle contient les méthodes nécessaires pour évaluer et attribuer des notes aux coups, ainsi que choisir le meilleur coup.
+- Responsables : Yoann et Abdourahmane
+- Séances : 3 et 4
+- Commit : 312333f56f059c0b71a4d612a26850e28f51a65a
 
-## Création de le class Noeud 
+Création des fonctions meilleurCoup, minMax, et determinationScore.
+
+## Création de la classe Noeud 
 
 Elément de l'arbolescance utilisé pour l'algorithme Monté Carlo
 
@@ -143,6 +151,16 @@ Faire le lien entre le class Noeud et Montecarlo
 
 Rajouter une phase d'initialisation, implémenter la fonction MeilleurCoup
 
+## Débug et optimisation de l'algorithme MinMax
+
+Element de l'arborescence utilisé pour l'algorithme MinMax. La classe sert à modéliser un arbre de coups possibles.
+
+- Responsables : Yoann et Abdourahmane
+- Séance : 5
+- Statut : *En cours*
+
+L'algorithme de détermination du score fonctionne mais le programme n'utilise pas la fonction minMax.
+Certaines fonctions peuvent être simplifiées.
 
 
 
