@@ -28,13 +28,17 @@ public class Montecarlo extends AlgoRecherche  {
         
         Coup dernier = _plateau.getDernierCoup();
         if (dernier!=null){
-            joue=joue.fils(joue,dernier);
+            adv=joue.fils(joue,dernier);
         }
         
         ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
-        joue=joue.MeilleurNoeud(joue, C,coups);
-        
-        return joue.coupP;
+        joue=adv.MeilleurNoeud(adv, C,coups);
+        if (joue!=null){
+            return joue.coupP;
+        }else{
+            joue=adv.ExtensionHazard(_plateau, _joueur, adv);
+            return joue.coupP;
+        }
     }
     
     public void initialisation (Plateau p, Joueur j, Noeud n){
