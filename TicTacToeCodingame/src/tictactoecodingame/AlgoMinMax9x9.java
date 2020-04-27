@@ -8,21 +8,22 @@ import java.util.ArrayList;
  * @author Yoann Bordin
  */
 public class AlgoMinMax9x9 extends AlgoRecherche{
-    int profondeur;     // profondeur de recherche dans l'arbre des coups possibles
-    ArbreCoups ac;
+    private int profondeur;     // profondeur de recherche dans l'arbre des coups possibles
+    private ArbreCoups ac;
     
-    Joueur joueur;
-    Plateau pl;
+    private Joueur joueur;
+    private Plateau pl;
     
-    int[][] diag_gd = {{0, 0}, {1, 1}, {2, 2}};
-    int[][] diag_dg = {{2, 0}, {1, 1}, {0, 2}};
+    final private int[][] diag_gd = {{0, 0}, {1, 1}, {2, 2}};
+    final private int[][] diag_dg = {{2, 0}, {1, 1}, {0, 2}};
     
 
     public AlgoMinMax9x9(Plateau pl, Joueur j, int profondeur){
         
         this.profondeur = profondeur;
         Coup node = pl.getDernierCoup();
-        ac = new ArbreCoups(pl,j,j.getAdversaire(), (CoupTicTacToe) node,profondeur);
+        
+        ac = new ArbreCoups(pl,j,j.getAdversaire(), (CoupTicTacToe) node,this.profondeur);
         
         joueur = j;
         this.pl = pl;
@@ -39,10 +40,16 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         
         ArrayList<Coup> listeCoups = _plateau.getListeCoups(_joueur);
         
-        // attribue la note à chaque coup possible (à l'aide de minmax)
+        // attribue la note à chaque coup possible (à l'aide de minmax
+        
         for(Coup c : listeCoups){
-            c.setNote(minMax((CoupTicTacToe) c, profondeur, true));
+            int note = minMax((CoupTicTacToe) c, profondeur, true);
+            c.setNote(note);
+            
+            System.out.println(c + " " + note);
         }
+        
+        
         
         // Récupère le meilleur coup
         Coup meilleurCoup = listeCoups.get(0);
@@ -59,19 +66,24 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         return meilleurCoup;
         
     }
-     private int minMax(CoupTicTacToe node, int profondeur, boolean max){
+     private int minMax(CoupTicTacToe node, int profondeur, boolean maxPlayer){
+        ac = new ArbreCoups(pl,joueur,joueur.getAdversaire(), node, profondeur);
+        
         // If end of the tree then return score from parameters
         if(profondeur == 0 || ac.hauteur() == 0){
             return determinationScore9x9(node, joueur, pl);
         }
+        
         // Recursive use of the minmax algorithm to set the scores of next plays
-        ArrayList<Coup> listeCoupsSuiv = ac.getListeCoups(node);
+        
+        ArrayList<Coup> listeCoupsSuiv = ac.getListeCoups();
+        
         for(Coup c : listeCoupsSuiv){
-            c.setNote(minMax((CoupTicTacToe) c, profondeur-1, !max));
+            c.setNote(minMax((CoupTicTacToe) c, profondeur-1, !maxPlayer));
         }
         
         // 
-        if(max){
+        if(maxPlayer){
             return max(listeCoupsSuiv);
         }
         else{ // min
@@ -79,11 +91,11 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         }
     }
     
-    private int max(ArrayList<Coup> lc){
-        int max = lc.get(0).getNote();
+    private int max(ArrayList<Coup> listeCoups){
+        int max = listeCoups.get(0).getNote();
         int note;
         
-        for(Coup c : lc){
+        for(Coup c : listeCoups){
             note = c.getNote();
             if(max < note){
                 max = note;
@@ -91,11 +103,11 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         }
         return max;
     }
-    private int min(ArrayList<Coup> lc){
-        int min = lc.get(0).getNote();
+    private int min(ArrayList<Coup> listeCoups){
+        int min = listeCoups.get(0).getNote();
         int note;
         
-        for(Coup c : lc){
+        for(Coup c : listeCoups){
             note = c.getNote();
             if(min > note){
                 min = note;
@@ -113,9 +125,13 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         
          pour chaque rangée :
          si rangée contient 2 pièces
-         alors score +2
+         alors score +4
          si rangee contient 1 pièce et pas de pièce de l'adversaire
          alors score +1
+         si rangée contient 2 pièces de l'adversaire
+         alors score +4
+         si rangee contient 1 pièce de l'adversaire 
+         alors score -1
             
         
          */
@@ -142,7 +158,6 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         if (colonne == ligne - 2 || ligne == colonne - 2 || colonne == 1 && ligne == 1) {
             score += getScore(diag_dg, joueur, plateau);
         }
-
         return score;
     }
 
@@ -150,31 +165,29 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         int score = 0;
 
         if (rangee(rangee, joueur, pl) == 2) {
-            score += 3;
+            score += 4;
         } else if (rangee(rangee, joueur, pl) == 1) {
             score += 1;
         }
         if (rangee(rangee, joueur.getAdversaire(), pl) == 2) {
-            score += 3;
+            score += 4;
         } else if (rangee(rangee, joueur.getAdversaire(), pl) == 1) {
             score -= 1;
         }
-
         return score;
     }
 
-    public int rangee(int[][] rg, Joueur j, Plateau pl) {
-        int ct = 0;
+    public int rangee(int[][] rangee, Joueur j, Plateau pl) {
+        int compteur = 0;
 
         // On incrémente de 1 le compteur pour chaque jeton de la rangéé appartenant au joueur
-        for (int[] cs : rg) {
-            Jeton jt = (Jeton) pl.getPiece(new Case(cs[0], cs[1]));
-            if (jt != null && jt.getJoueur() == j) {
-                ct++;
+        for (int[] _case : rangee) {
+            Jeton jeton = (Jeton) pl.getPiece(new Case(_case[0], _case[1]));
+            if (jeton != null && jeton.getJoueur() == j) {
+                compteur++;
             }
         }
-
-        return ct;
+        return compteur;
     }
     
     private int determinationScore9x9(CoupTicTacToe cp, Joueur joueur, Plateau _plateau){
@@ -200,15 +213,12 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
         // Calcul du score des coups possibles
         int ligne3x3 = cp.getLigne()%3;
         int colonne3x3 = cp.getColonne()%3;
-        System.out.println(cp.getColonne() + " " + cp.getLigne());
         
         int score;
         score = score3x3[ligne3x3][colonne3x3];
         
         // Ajout des scores de la grille 3x3
         score += determinationScoreCases3x3(cp, joueur, plateau);
-        
-        System.out.println("Score : " + score);
         
         return score; 
     }
@@ -246,7 +256,6 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
                 ArrayList<Coup> lCoups3x3;
                 
                 lCoups3x3 = g3x3.getListeCoups(joueur.getAdversaire());
-                System.out.println(lCoups3x3);
                 
                 for(Coup _c : lCoups3x3){
                     CoupTicTacToe c = (CoupTicTacToe) _c;
@@ -263,10 +272,11 @@ public class AlgoMinMax9x9 extends AlgoRecherche{
                     }
                 }
                 
-                //Ajoute l'inverse du score à la liste des scores des grilles 3x3 (score les plus faibles moins intéressants pour l'IA)
-                score3x3[i][j] = -sc3x3Prov;
+                //Ajoute 10 moins l'inverse du score à la liste des scores des grilles 3x3 (score les plus faibles moins intéressants pour l'IA)
+                score3x3[i][j] = 10-sc3x3Prov;
             }
         }
+        
         return score3x3;
     }
 }
