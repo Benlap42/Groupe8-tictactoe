@@ -13,97 +13,91 @@ import java.util.Random;
  * @author benoi
  */
 public class Montecarlo extends AlgoRecherche  {
+    Noeud origine;
+    Noeud joue; 
+    double C; // niveau exploration
     
-    public Montecarlo() {
+    public Montecarlo(double c) {
+       origine = new Noeud (null,null);
+       joue = origine; 
+       C=c;
+       
     }
     
-    
-    public Coup meilleurCoup( Plateau _plateau , Joueur _joueur , boolean _ponder ){
+    public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
         
-        ArrayList<Coup> coups_test = _plateau.getListeCoups(_joueur);        //donne coup posssible après
-        
-        int[][] learn=new int[coups_test.size()][2];
-        Random rand = new Random();
-        
-        Plateau plateau_algo =_plateau;         // engendre nouveau jeu
-        
-        JoueurOrdi IA = new JoueurOrdi("IA_train",_joueur.getIdJoueur());   //nouveau joueur avec les même symbole (croix ou rond) que précédemmant
-        int id;
-        if (_joueur.getIdJoueur()==1){
-            id=0;
-        }else{
-            id=1;
-        }
-        JoueurOrdi Ordi = new JoueurOrdi("Ordi_train",_joueur.getIdJoueur());
-            
-        AlgoRechercheAleatoire alea_test  = new AlgoRechercheAleatoire( );   // L'ordinateur et l'IA jouent au hasard
-        Ordi.setAlgoRecherche(alea_test);
-        IA.setAlgoRecherche(alea_test);
-            
-        for (int k=0; k<plateau_algo.getNbColonnes();k++){              // attribut les coups aux nouveaux joueurs 
-            for (int l=0; l<plateau_algo.getNbLignes();l++){
-                
-                Case c = new Case(k,l);
-                
-                if ( plateau_algo.getPiece(c) != null){
-                    Piece p = plateau_algo.getPiece(c);
-               
-                    Joueur joueur_test = p.getJoueur(); 
-                
-                    if (joueur_test == _joueur){
-                        p.setJoueur(IA);
-                    }else{
-                        p.setJoueur(Ordi);
-                    }
-                
-                }
-            }
-                    
+        Coup dernier = _plateau.getDernierCoup();
+        if (dernier!=null){
+            joue=joue.fils(joue,dernier);
         }
         
-
-        for (int j =0;j<50;j++){         // tester chance de gagner en fonction du prochain coup joué
-            
-            Plateau plateau_test = plateau_algo;
-            
-            int i = rand.nextInt(coups_test.size());     //prend valeur au pif à tester
-            learn[i][1]++;
-            
-            plateau_test.joueCoup(coups_test.get(i));                                       // joue coup dont veut tester chance de réussite
-            
-            Arbitre a_test = new Arbitre(plateau_test, Ordi , IA );          //met partie en jeu AVEC IA JOUE EN DEUXIEME CAR COMME SI VENAIT DE JOUER
-            
-            Joueur vainqueur;
-            vainqueur = a_test.startGame(false);
-            
-            if (vainqueur!=null){
-                if (IA==vainqueur){
-                    learn[i][0]++;
-                }
-            }else{
-                learn[i][1]--;
-            }
-        }
+        ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
+        joue=joue.MeilleurNoeud(joue, C,coups);
         
-        int[] chance=new int[coups_test.size()];        // calcule de la chance de réussite de chaque coup
-        for (int h=1;h<chance.length;h++){
-            if (learn[h][1]!=0){
-                chance[h]=(learn[h][0]*100)/learn[h][1];
-            }else{
-                chance[h]=0;
-            }
-        }
-        
-        int max = 0;                                //recherche du coup qui donne le plus de chance de gagner
-        for (int k=1;k<coups_test.size();k++){
-            if (Math.max(chance[max],chance[k])!= chance[max]){
-                max=k;
-            }
-        }
-        
-        System.out.println(max);
-        return coups_test.get(max);
+        return joue.coupP;
     }
     
-
+    public void initialisation (Plateau p, Joueur j, Noeud n){
+        
+        if (n==null){
+            n=origine;
+        }
+        n.ExtensionForce(p, j, n);
+    }
+    
+    public void entrainement (Plateau _plateau, Joueur _joueur){
+        joue=origine;
+        _plateau.init();
+        int j=0;    // compteur : 0 =1er joueur et 1 =2ème joueur
+        
+        while (joue.fils.size()!=0){
+            ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
+            joue=joue.MeilleurNoeud(joue, C,coups);
+            joue.jouer();
+            _plateau.joueCoup(joue.coupP);
+            j++;
+            j=j%2;
+        }
+        
+        joue=joue.ExtensionHazard(_plateau, _joueur, joue);
+        joue.jouer();
+        _plateau.joueCoup(joue.coupP);
+        int k =j; //garde en mémoir on évalue quelle couleur de noeud
+            
+        while (_plateau.partieTerminee()==false){
+            j++;
+            j=j%2;
+            ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
+            Random rnd = new Random();
+            Coup c = coups.get(rnd.nextInt( coups.size()));
+            _plateau.joueCoup(c);
+        }
+       
+        if (_plateau.partieGagnee()){
+            while (joue.pere!= null){
+                if (j==k){
+                    joue.gagne();
+                }
+                joue=joue.pere;
+                k++;
+                k=k%2;
+            }
+        }
+        
+        
+    }
+    
+    public void visualisation (){
+        joue=origine;
+        for (int i =0;i<joue.coupF.size();i++){
+            Noeud n = joue.fils.get(i);
+            System.out.println(joue.coupF.get(i).toString()+' '+n.victoir+'/'+n.simulation);
+            for (int j =0;j<n.coupF.size();j++){
+                System.out.println("___"+n.coupF.get(j).toString()+' '+n.fils.get(j).victoir+'/'+n.fils.get(j).simulation);
+            }
+        }
+        
+    }
+    
 }
+
