@@ -113,4 +113,5 @@ public class Noeud {
         nf.simulation = 100;
         nf.victoir=nf.simulation; 
     }
+    
 }
