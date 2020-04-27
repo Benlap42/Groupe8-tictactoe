@@ -116,6 +116,7 @@ public class ArbreCoups {
 
     public int hauteur() {
         
+        
         if(coupsPossibles.isEmpty()){
             return 0;
         }
@@ -127,7 +128,7 @@ public class ArbreCoups {
                 hMax = ach;
             }
         }
-        return hMax;
+        return hMax + 1;
     }
 
     @Override
