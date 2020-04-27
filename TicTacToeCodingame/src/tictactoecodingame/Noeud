@@ -105,4 +105,12 @@ public class Noeud {
             }
         }
     }
+
+    public void booster(Noeud n, Coup c){
+        n.fils.removeAll(n.fils);
+        n.coupF.removeAll(n.coupF);
+        Noeud nf = n.fils(n, c);
+        nf.simulation = 100;
+        nf.victoir=nf.simulation; 
+    }
 }
