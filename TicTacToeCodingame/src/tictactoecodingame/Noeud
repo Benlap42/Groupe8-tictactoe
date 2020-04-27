@@ -60,24 +60,27 @@ public class Noeud {
         double max=0;
         int j=0; // indice 
         
-        
-        for (int i=0;i<S;i++){
-            if (coups.indexOf(n.coupF.get(i))!=-1){
-                v=n.fils.get(i).victoir;
-                s=n.fils.get(i).simulation;
-                if (s!=0){
-                    selection=Math.log10(S)/s;
-                    selection = v/s + C * Math.pow(selection,1/2);
-                }else{
-                    selection = 2;
-                }
-                if (selection>max){
-                    max = selection;
-                    j=i;
+        if (S==0){
+            return null;
+        }else{
+            for (int i=0;i<S;i++){
+                if (coups.indexOf(n.coupF.get(i))!=-1){
+                    v=n.fils.get(i).victoir;
+                    s=n.fils.get(i).simulation;
+                    if (s!=0){
+                        selection=Math.log10(S)/s;
+                        selection = v/s + C * Math.pow(selection,1/2);
+                    }else{
+                        selection = 2;
+                    }
+                    if (selection>max){
+                        max = selection;
+                        j=i;
+                    }
                 }
             }
+            return n.fils.get(j);
         }
-        return n.fils.get(j);
     }
     
     public Noeud ExtensionHazard (Plateau _plateau,Joueur _joueur, Noeud n){
