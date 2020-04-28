@@ -95,11 +95,11 @@ Rajouter une phase d'initialisation, implémenter la fonction MeilleurCoup
 Element de l'arborescence utilisé pour l'algorithme MinMax. La classe sert à modéliser un arbre de coups possibles.
 
 - Responsables : Yoann et Abdourahmane
-- Séance : 5
+- Séance : 5 et 6
 - Statut : *En cours*
 
-L'algorithme de détermination du score fonctionne mais le programme n'utilise pas la fonction minMax.
-Certaines fonctions peuvent être simplifiées.
+Le programme utilise désormais l'algorithme MinMax, mais retourne le même score pour chaque coup lorsqu'on augmente la profondeur.
+Amélioration de l'algorithme MinMax (Commit : 74fdac1d615e7509a86406186ed270fa687a6082)
 
 ## entrainement de l'algo Montecarlo et test avec codin games
 
