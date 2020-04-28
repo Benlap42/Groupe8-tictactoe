@@ -26,4 +26,9 @@ public abstract class Coup {
     
     abstract public int hashCode();
     
+    abstract public int getLigne();
+    
+    abstract public int getColonne();
+    
+    abstract public Piece getJeton();
 }
