@@ -15,12 +15,14 @@ import java.util.Random;
 public class Montecarlo extends AlgoRecherche  {
     Noeud origine;
     Noeud joue; 
+    Noeud adv;
     double C; // niveau exploration
     
     public Montecarlo(double c) {
        origine = new Noeud (null,null);
        joue = origine; 
        C=c;
+       adv = origine;
        
     }
     
