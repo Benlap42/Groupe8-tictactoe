@@ -101,6 +101,13 @@ Element de l'arborescence utilisé pour l'algorithme MinMax. La classe sert à m
 L'algorithme de détermination du score fonctionne mais le programme n'utilise pas la fonction minMax.
 Certaines fonctions peuvent être simplifiées.
 
+## entrainement de l'algo Montecarlo et test avec codin games
+
+Implémentation de la classe Noeud, update de Montecarlo. Modification de la façon dont l'algorithme crée son arbre (mis en mémoire)
+
+- Responsables : Ines et Benoit
+- Séance : 5
+- Commit : 
 
 
 
