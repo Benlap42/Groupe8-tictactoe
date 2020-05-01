@@ -80,7 +80,7 @@ Création de fonctions
 -Séances : 3 et 4
 -Commit :
 
-## Rendre l'algorithme fonctionnel 
+## Rendre l'algorithme Montecarlo fonctionnel 
 
 Faire le lien entre le class Noeud et Montecarlo
 
@@ -89,6 +89,7 @@ Faire le lien entre le class Noeud et Montecarlo
 -Commit :
 
 Rajouter une phase d'initialisation, implémenter la fonction MeilleurCoup
+Le tester et enlever les erreurs possibles. 
 
 ## Débug et optimisation de l'algorithme MinMax
 
@@ -101,7 +102,7 @@ Element de l'arborescence utilisé pour l'algorithme MinMax. La classe sert à m
 Le programme utilise désormais l'algorithme MinMax, mais retourne le même score pour chaque coup lorsqu'on augmente la profondeur.
 Amélioration de l'algorithme MinMax (Commit : 74fdac1d615e7509a86406186ed270fa687a6082)
 
-## entrainement de l'algo Montecarlo et test avec codin games
+## Entrainement de l'algo Montecarlo et amélioration
 
 Implémentation de la classe Noeud, update de Montecarlo. Modification de la façon dont l'algorithme crée son arbre (mis en mémoire)
 
@@ -109,5 +110,11 @@ Implémentation de la classe Noeud, update de Montecarlo. Modification de la fa�
 - Séance : 5
 - Commit : 
 
+## Voir l'algorithme sous un autre angle 
 
+Implémenter de l'entrainement non pas que en début de partie mais également en cours de partie. 
+
+- Responsables : Inès et Benoit
+- Séance : 6
+- Commit: 
 
