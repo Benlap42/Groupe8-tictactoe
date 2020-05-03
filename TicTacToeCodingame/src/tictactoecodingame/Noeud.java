@@ -112,4 +112,10 @@ public class Noeud {
         nf.simulation = 100;
         nf.victoir=nf.simulation; 
     }
+
+    public void réinitialisation (Noeud n){
+        for(int i = 0;i<n.fils.size();i++){
+            n.fils.get(i).simulation = n.fils.get(i).victoir=0;
+        }
+    }
 }
