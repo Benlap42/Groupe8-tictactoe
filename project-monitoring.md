@@ -13,9 +13,9 @@ Télécharger le dossier, l'ouvrir, le lire et le faire tourner dans le but de c
 
 Mise en place d'un Git comme outil de partage permettant le visionnage du projet
 
--Responsable : Benoit 
--Séance : 1 et 2 
--Commit
+- Responsable : Benoit 
+- Séance : 1 et 2 
+- Commit
 
 Ouverture d'un projet sur internet (initialement le gitlab de l'école puis avec Github)
 Faire le lien avec GitKraken
@@ -28,8 +28,8 @@ URL sur Github : " https://github.com/Benlap42/Groupe8-tictactoe "
 
 Utiliser les bonnes fonctions du programme déjà existant afin de rajouter des fonctionnalités à celui ci 
 
--Responsable : Tout le monde
--Séances : Toutes
+- Responsable : Tout le monde
+- Séances : Toutes
 
 Naviguer entre les différentes class 
 Tester leur fonctionalité à part 
@@ -39,8 +39,8 @@ Tester leur fonctionalité à part
 
 Faire la traduction entre la théorie des algorithme et le code java
 
--Responsable : Tout le monde
--Séances : 1, 2 et 3
+- Responsable : Tout le monde
+- Séances : 1, 2 et 3
 
 
 ## Création de la classe ArbreCoups
@@ -67,26 +67,26 @@ Création des fonctions meilleurCoup, minMax, et determinationScore.
 
 Elément de l'arbolescance utilisé pour l'algorithme Monté Carlo
 
--Responsable : Benoit et Inès
--Séance : 3 et 4
--Commit : 5575a20cdb2a5a1fb5c2f273e4ee28bbb827299b
+- Responsable : Benoit et Inès
+- Séance : 3 et 4
+- Commit : 5575a20cdb2a5a1fb5c2f273e4ee28bbb827299b
 
 
 ## Implémentation des différentes phases de l'algorithme Monté Carlo
 
 Création de fonctions
 
--Responsable : Benoit et Inès 
--Séances : 3 et 4
--Commit : 479bbb64cc3afbb4c52fb55a014d99aac97d0bdc
+- Responsable : Benoit et Inès 
+- Séances : 3 et 4
+- Commit : 479bbb64cc3afbb4c52fb55a014d99aac97d0bdc
 
 ## Rendre l'algorithme Montecarlo fonctionnel 
 
 Faire le lien entre le class Noeud et Montecarlo
 
--Responsable : Benoit et Inès 
--Séances : 4 et 5
--Commit : 5dad5eee3a6e2e04343a72c7334fcef9e3c5d790
+- Responsable : Benoit et Inès 
+- Séances : 4 et 5
+- Commit : 5dad5eee3a6e2e04343a72c7334fcef9e3c5d790
 
 Rajouter une phase d'initialisation, implémenter la fonction MeilleurCoup
 Le tester et enlever les erreurs possibles. 
