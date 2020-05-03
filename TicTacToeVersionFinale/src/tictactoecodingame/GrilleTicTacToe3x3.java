@@ -129,7 +129,6 @@ public class GrilleTicTacToe3x3 extends Plateau {
         return isGrillePleine();
     }
 
-    @Override
     public ArrayList<Coup> getListeCoups(Joueur _joueur) {
         
         ArrayList<Coup> listeCoups = new ArrayList<Coup>();
@@ -199,5 +198,4 @@ public class GrilleTicTacToe3x3 extends Plateau {
     public Coup getDernierCoup() {
         return dernierCoup;
     }
-
 }

@@ -30,7 +30,7 @@ public class JoueurHumain extends Joueur {
         try {
             int nbCar = clavier.read(buffer, 0, 5);
             monCoup = new String(buffer, 0, nbCar-1);
-
+            
             return _plateau.stringToCoup(monCoup, this);
             
         } catch (IOException e) {

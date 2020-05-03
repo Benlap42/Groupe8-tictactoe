@@ -39,7 +39,7 @@ public class JoueurOrdi extends Joueur {
 
     public Coup joue(Plateau _plateau  ) {
         Coup coupOrdi;
-
+        
         coupOrdi = algoRecherche.meilleurCoup(_plateau , this , ponder);
        
         return coupOrdi;

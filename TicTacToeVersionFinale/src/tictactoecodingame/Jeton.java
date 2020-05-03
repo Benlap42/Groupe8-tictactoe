@@ -16,6 +16,7 @@ public class Jeton extends Piece {
            super( _joueur );
     }
 
+    @Override
     public String toString() {
 
            if ((getJoueur().getIdJoueur()) == 1) {

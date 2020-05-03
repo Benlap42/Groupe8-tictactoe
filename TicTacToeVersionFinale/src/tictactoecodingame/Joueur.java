@@ -10,6 +10,8 @@ public abstract class Joueur {
 	private String nom;
 	private static int nbJoueur = 0;
 	private int idJoueur;
+        
+        private Joueur adversaire;
 	
 	public Joueur( String _nom ) {
 		idJoueur = nbJoueur;
@@ -39,4 +41,12 @@ public abstract class Joueur {
 	public String toString() {
 		return nom;
 	}
+        
+        public void setAdversaire(Joueur adv){
+            adversaire = adv;
+        }
+        
+        public Joueur getAdversaire(){
+            return adversaire;
+        }
 }

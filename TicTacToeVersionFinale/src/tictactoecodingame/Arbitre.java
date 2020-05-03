@@ -16,7 +16,10 @@ public class Arbitre {
         plateau = _plateau;
         joueur1 = _joueur1;
         joueur2 = _joueur2;
-        currentJoueur = joueur1;     // Le joueur1 commence la partie.        
+        currentJoueur = joueur1;     // Le joueur1 commence la partie.  
+        
+        joueur1.setAdversaire(joueur2);
+        joueur2.setAdversaire(joueur1);
     }
 
     /**
@@ -33,10 +36,13 @@ public class Arbitre {
         
         while (!plateau.partieTerminee()) {
             do {
+                
                 if ( _trace ) {
                     System.out.println(plateau);
                     System.out.println(currentJoueur + " ( " +currentJoueur.getIdJoueur() + "  )  joue : " );
                 }
+                
+                
                 coup = currentJoueur.joue(plateau);
 
                 if (!plateau.isValide(coup)) {
@@ -162,4 +168,9 @@ public class Arbitre {
     public Joueur getCurrentJoueur() {
         return currentJoueur;
     }
+    
+    public Joueur getJ1(){
+        return joueur1;
+    }
+    
 }

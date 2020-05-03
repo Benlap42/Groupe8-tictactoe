@@ -249,6 +249,9 @@ public class GrilleTicTacToe9x9 extends Plateau {
         CoupTicTacToe coup = (CoupTicTacToe) _coup;
 
         if ( grille9x9[coup.getColonne()][coup.getLigne()] != null ) return false;
+        if(this.partieTerminee()){
+            return false;
+        }
         
         if ( dernierCoup == null ) return true;
       
@@ -270,6 +273,7 @@ public class GrilleTicTacToe9x9 extends Plateau {
         if ( grillePleine ) {           
               return true;
         }
+        
                 
       
         return ( coup.getColonne() >= x0  && coup.getColonne() < x0+3 &&  coup.getLigne()>= y0  && coup.getLigne() < y0+3 );
