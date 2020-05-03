@@ -5,36 +5,39 @@
  */
 package tictactoecodingame;
 
+import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *
- * @author benoi
+ * @author Inès
+ * @author benoit
  */
 public class Montecarlo extends AlgoRecherche  {
     Noeud origine;
     Noeud joue; 
     Noeud adv;
     double C; // niveau exploration
+    int reflexion;
     
-    public Montecarlo(double c) {
+    public Montecarlo(double c, int r) {
        origine = new Noeud (null,null);
        joue = origine; 
        C=c;
        adv = origine;
-       
+       reflexion=r; 
     }
     
     public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
         
+        _plateau.sauvegardePosition(0);
+        
+        /// regarder état du plateau et si 2 jetons alignés le forcer à le positionner là + booster la branche 
         ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
 
         Coup dernier = _plateau.getDernierCoup();
         if (dernier!=null){
             adv=joue.fils(joue,dernier);
-
-             _plateau.sauvegardePosition(0);
         
             for (int i=0; i<coups.size();i++){
                 _plateau.joueCoup(coups.get(i));
@@ -66,13 +69,20 @@ public class Montecarlo extends AlgoRecherche  {
                 }
                 _plateau.restaurePosition(0);
             }
-
+            
+            adv.réinitialisation(adv);
+            
+            for (int i=0; i<reflexion; i++){
+                entrainement(_plateau,_joueur,adv);
+            }
         }
         
         joue=adv.MeilleurNoeud(adv, C,coups);
         if (joue!=null){
+            _plateau.restaurePosition(0);
             return joue.coupP;
         }else{
+            _plateau.restaurePosition(0);
             joue=adv.ExtensionHazard(_plateau, _joueur, adv);
             return joue.coupP;
         }
@@ -87,57 +97,54 @@ public class Montecarlo extends AlgoRecherche  {
     }
     
     public void entrainement (Plateau _plateau, Joueur _joueur){
-        joue=origine;
-        _plateau.init();
+        
+         _plateau.sauvegardePosition(5);
+        joue=n;
         int j=0;    // compteur : 0 =1er joueur et 1 =2ème joueur
         
-        while (joue.fils.size()!=0){
+        while (joue.fils.size()!=0){                                        // SELECTION
             ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
             joue=joue.MeilleurNoeud(joue, C,coups);
-            joue.jouer();
             _plateau.joueCoup(joue.coupP);
-            j++;
-            j=j%2;
+            j=(j++)%2;
         }
         
-        joue=joue.ExtensionHazard(_plateau, _joueur, joue);
-        joue.jouer();
-        _plateau.joueCoup(joue.coupP);
         int k =j; //garde en mémoir on évalue quelle couleur de noeud
-            
-        while (_plateau.partieTerminee()==false){
-            j++;
-            j=j%2;
+        if (_plateau.partieTerminee()==false){                              //EXPANSION
+            joue=joue.ExtensionHazard(_plateau, _joueur, joue);
+            _plateau.joueCoup(joue.coupP);
+        }else{
+            k=(j++)%2;
+        }
+        
+        while (_plateau.partieTerminee()==false){                           //SIMULATION
+            j=(j++)%2;
             ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
             Random rnd = new Random();
             Coup c = coups.get(rnd.nextInt( coups.size()));
             _plateau.joueCoup(c);
         }
        
-        if (_plateau.partieGagnee()){
+        if (_plateau.partieGagnee()){                                       // BACK PROPAGATION
             while (joue.pere!= null){
+                joue.jouer();
                 if (j==k){
                     joue.gagne();
-                }
+                } 
                 joue=joue.pere;
-                k++;
-                k=k%2;
+                k=(k++)%2;
             }
         }
-        
+        _plateau.restaurePosition(5);
         
     }
     
-    public void visualisation (){
-        joue=origine;
+    
+    public void visualisation (Noeud n){
+        joue=n;
         for (int i =0;i<joue.coupF.size();i++){
-            Noeud n = joue.fils.get(i);
-            System.out.println(joue.coupF.get(i).toString()+' '+n.victoir+'/'+n.simulation);
-            for (int j =0;j<n.coupF.size();j++){
-                System.out.println("___"+n.coupF.get(j).toString()+' '+n.fils.get(j).victoir+'/'+n.fils.get(j).simulation);
-            }
-        }
-        
+            System.out.println(joue.coupF.get(i).toString()+' '+joue.fils.get(i).victoir+'/'+joue.fils.get(i).simulation);
+        } 
     }
     
 }
