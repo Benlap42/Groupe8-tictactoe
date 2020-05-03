@@ -4,9 +4,9 @@
 
 Télécharger le dossier, l'ouvrir, le lire et le faire tourner dans le but de comprendre ces fonctionnalitées.
 
--Responsable : Tout le monde 
--Séance : 1
--Commit
+- Responsable : Tout le monde 
+- Séance : 1
+- Commit
 
 
 ## Mise en place du Git
@@ -118,5 +118,5 @@ Implémenter de l'entrainement non pas que en début de partie mais également e
 
 - Responsables : Inès et Benoit
 - Séance : 6
-- Commit: d4816899f668dce6d2821e3dc09e71d9176a9b16
+- Commit : d4816899f668dce6d2821e3dc09e71d9176a9b16
 
