@@ -16,13 +16,17 @@ public class Player {
         JoueurOrdi joueurOrdi = new JoueurOrdi("Ordi");
        
         
-        // Remplacer ici l'algorithme aléatoire par votre algorithme. 
-        // Créer une nouvelle classe qui hérite de la class AlgoRecherche
-        AlgoRechercheAleatoire alea  = new AlgoRechercheAleatoire( );   // L'ordinateur joue au hasard
-        joueurOrdi.setAlgoRecherche(alea);                              
+        Montecarlo montecarlo = new Montecarlo(1,1000);
+        joueurOrdi.setAlgoRecherche(montecarlo);                              
              
         GrilleTicTacToe3x3 grille = new GrilleTicTacToe3x3();
          
+        montecarlo.initialisation(_plateau, joueurOrdi,null);
+
+        for (int i=0;i<1000;i++){
+            montecarlo.entrainement(_plateau, joueurOrdi, montecarlo.origine);
+        }
+
         Arbitre a = new Arbitre(grille, joueurOrdi , humain );
        
         a.startNewGame(true);    // Demarre une partie en affichant la grille du jeu

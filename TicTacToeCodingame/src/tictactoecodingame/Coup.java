@@ -26,10 +26,18 @@ public abstract class Coup {
     
     abstract public int hashCode();
     
+<<<<<<< HEAD
     abstract public int getLigne(); 
      
     abstract public int getColonne(); 
      
     abstract public Piece getJeton(); 
     
+=======
+    abstract public int getLigne();
+    
+    abstract public int getColonne();
+    
+    abstract public Piece getJeton();
+>>>>>>> Montecarlo
 }

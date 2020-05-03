@@ -12,6 +12,11 @@ public class JoueurOrdi extends Joueur {
         super(_nom);
         ponder = false;
     }
+
+    public JoueurOrdi(String _nom, int id) {
+        super(_nom,id);
+        ponder = false;
+    }
     
     public JoueurOrdi( String _nom , AlgoRecherche _algo , boolean _ponder ) {
         super( _nom );

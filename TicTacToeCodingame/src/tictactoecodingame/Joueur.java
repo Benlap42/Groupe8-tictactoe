@@ -16,6 +16,12 @@ public abstract class Joueur {
                 nbJoueur++;
                 this.nom = _nom;
 	}
+
+	public Joueur( String _nom ,int id) {
+		idJoueur = id;
+                nbJoueur++;
+                this.nom = _nom;
+	}
 	
 	public void setNom ( String _nom ) {
 		this.nom = _nom;
