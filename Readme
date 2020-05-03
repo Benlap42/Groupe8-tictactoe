@@ -1,9 +1,15 @@
 ## Groupe8-tictactoe
 
+<<<<<<< HEAD
 Nous avons pour but de créer deux algorithmes utilisant deux méthodes de résolutions. L'un suivant la methode de  Montecarlo et l'autre la méthode Minmax.
 
 
 ##Auteur:
+=======
+bref descriptif
+
+## Auteur:
+>>>>>>> Dev
 
 - Yoann
 - Ines
@@ -11,6 +17,7 @@ Nous avons pour but de créer deux algorithmes utilisant deux méthodes de réso
 - Benoît
 
 ## Installation
+<<<<<<< HEAD
 
 Afin de faire fonctionner le prgramme il vous suffit de faire un download du projet sur Git et de l'ouvrir via netbeans.
 Il y a deux versions dans player.java en plus de l'option "local" et "codin game" : 
@@ -18,3 +25,5 @@ Il y a deux versions dans player.java en plus de l'option "local" et "codin game
 - une pour la méthode minmax
 Il suffit de décommenter celle que l'on souhaite faire fonctionner pour l'exécuter.
 
+=======
+>>>>>>> Dev
