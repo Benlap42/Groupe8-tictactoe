@@ -93,14 +93,14 @@ Le tester et enlever les erreurs possibles.
 
 ## Débug et optimisation de l'algorithme MinMax
 
-Element de l'arborescence utilisé pour l'algorithme MinMax. La classe sert à modéliser un arbre de coups possibles.
+Implémentation complète et tests de l'algorithme minMax.
 
 - Responsables : Yoann et Abdourahmane
 - Séance : 5 et 6
-- Statut : *En cours*
+- Commit : 33c31b6e245d3e1d583f6b977f7857e86244df8a
 
-Le programme utilise désormais l'algorithme MinMax, mais retourne le même score pour chaque coup lorsqu'on augmente la profondeur.
-Amélioration de l'algorithme MinMax (Commit : 74fdac1d615e7509a86406186ed270fa687a6082)
+Nombreuses corrections de bugs, suppression d'éléments inutiles.
+L'algorithme est désormais fonctionnel.
 
 ## Entrainement de l'algo Montecarlo et amélioration
 
