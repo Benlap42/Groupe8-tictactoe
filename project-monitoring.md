@@ -127,5 +127,5 @@ Adaptation à la Grille 9x9.
 - Responsable : Inès
 - Séance : 6
 - Commit : 63aab88773f392999935185464dde233bf197c4a
-           bdf1508031b7f5057fc4e41f7840bbc5d71e238d
+- Commit : bdf1508031b7f5057fc4e41f7840bbc5d71e238d
 
